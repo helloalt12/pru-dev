@@ -22,7 +22,13 @@
       user-select: none;
       pointer-events: none; /* optional: mencegah klik kanan di beberapa browser */
   }
-
+  body, p, h1, h2, h3, span, a {
+      -webkit-user-select: none; /* Chrome, Safari */
+      -moz-user-select: none;    /* Firefox */
+      -ms-user-select: none;     /* IE10+ */
+      user-select: none;         /* standar */
+  }
+    
     :root {
       --accent-light: linear-gradient(90deg, #6366f1, #9333ea);
       --accent-dark: linear-gradient(90deg, #3b82f6, #8b5cf6);
@@ -38,6 +44,7 @@
       background: var(--bg-light);
       transition: background 0.4s, color 0.4s;
       overflow-x: hidden;
+      -webkit-touch-callout: none; /* iOS Safari */
     }
     body.dark-mode {
       color: var(--text-dark);
@@ -334,6 +341,11 @@
       img.addEventListener('dragstart', e => e.preventDefault());   // mencegah drag
     });
 
+    document.addEventListener('contextmenu', e => {
+      e.preventDefault(); // mencegah klik kanan di seluruh halaman
+    });
+
+
     AOS.init();
 
     const toggleBtn = document.getElementById('theme-toggle');
@@ -404,4 +416,5 @@
   </script>
 </body>
 </html>
+
 
