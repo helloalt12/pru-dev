@@ -9,6 +9,20 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <style>
+    img {
+      -webkit-user-drag: none; /* Chrome, Safari */
+      -khtml-user-drag: none;  /* Konon untuk KHTML */
+      -moz-user-drag: none;    /* Firefox */
+      -o-user-drag: none;      /* Opera */
+      user-drag: none;
+
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      pointer-events: none; /* optional: mencegah klik kanan di beberapa browser */
+  }
+
     :root {
       --accent-light: linear-gradient(90deg, #6366f1, #9333ea);
       --accent-dark: linear-gradient(90deg, #3b82f6, #8b5cf6);
@@ -315,6 +329,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script>
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('contextmenu', e => e.preventDefault()); // mencegah klik kanan
+      img.addEventListener('dragstart', e => e.preventDefault());   // mencegah drag
+    });
+
     AOS.init();
 
     const toggleBtn = document.getElementById('theme-toggle');
@@ -385,3 +404,4 @@
   </script>
 </body>
 </html>
+
