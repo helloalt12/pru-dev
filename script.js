@@ -11,8 +11,8 @@ const videoFrame = document.getElementById("videoFrame");
 function applyTheme(theme) {
   htmlEl.setAttribute("data-bs-theme", theme);
   icon.className = theme === "dark" ? "bi bi-sun-fill" : "bi bi-moon-fill";
-  bgImage.src = theme === "dark" ? "pictures/dark.png" : "pictures/light.png";
-  profileImage.src = theme === "dark" ? "pictures/profile-dark.png" : "pictures/profile-light.png";
+  bgImage.src = theme === "dark" ? "images/dark.png" : "pictures/light.png";
+  profileImage.src = theme === "dark" ? "images/profile-dark.png" : "images/profile-light.png";
 }
 
 const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
@@ -29,5 +29,6 @@ function matchHeights() {
 
 window.addEventListener("load", matchHeights);
 window.addEventListener("resize", matchHeights);
+
 
 document.addEventListener('contextmenu', event => event.preventDefault());
