@@ -143,7 +143,7 @@ body::before {
 
 /* Naikkan tombol sedikit */
 #leftColumn .d-flex.gap-2 {
-  margin-top: -2.5rem; /* geser ke atas */
+  margin-top: -2rem; /* geser ke atas */
   justify-content: center; /* optional agar lebih rapi */
 }
 
@@ -151,4 +151,5 @@ img {
   pointer-events: none;
   user-select: none;
 }
+
 
