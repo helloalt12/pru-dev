@@ -1,149 +1,451 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="auto">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pru Portfolio</title>
-  <link rel="icon" href="images/profile-dark.png" type="image/png">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio - Pru Roblox Developer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Navbar Hover & Toggler --- */
+        .navbar .nav-link { transition: color 0.3s ease; }
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active { color: var(--accent) !important; }
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css">
+        .navbar-toggler { outline: none; }
+        .navbar-toggler-icon { filter: invert(0.5); transition: filter 0.3s ease; }
+        .navbar-toggler:hover .navbar-toggler-icon { filter: invert(0.1); }
+
+        /* --- Theme Toggle --- */
+        .theme-toggle i { transition: color 0.25s ease, transform 0.25s ease; }
+        .theme-toggle:hover i { transform: rotate(20deg); color: var(--accent) !important; }
+
+        /* --- Theme Variables --- */
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --card: #f8f9fa;
+            --accent: #0d6efd;
+            --shadow-light: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-dark: 0 4px 12px rgba(255,255,255,0.06);
+            --border: rgba(0,0,0,0.125);
+        }
+        [data-theme="dark"] {
+            --bg: #0d0d0d;
+            --text: #ffffff;
+            --card: #1a1a1a;
+            --accent: #0d6efd;
+            --border: rgba(255,255,255,0.125);
+        }
+
+        /* --- Global & Typography --- */
+        body {
+            background: var(--bg) !important;
+            color: var(--text) !important;
+            font-family: 'Poppins', sans-serif;
+            transition: background 0.25s, color 0.25s;
+        }
+        section, main, .card, .navbar, footer {
+            background: var(--card) !important;
+            border-color: var(--border) !important;
+            color: var(--text) !important;
+            transition: background 0.25s, color 0.25s, border-color 0.25s;
+        }
+        body *:not(.keep-color):not(.bi):not(.btn):not(.btn *):not(.text-primary):not(.navbar-brand) {
+            color: var(--text) !important;
+        }
+        .keep-color { color: var(--accent) !important; }
+
+        /* --- Disable selection & drag --- */
+        * { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+        img, video { -webkit-user-drag: none; pointer-events: none; }
+
+        /* --- Sections --- */
+        .section { padding: 2.5rem 0; scroll-margin-top: 80px; }
+        @media (min-width: 992px) { .section { padding: 4.5rem 0; } }
+        .section-title {
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        /* --- Cards --- */
+        .card {
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-light);
+        }
+        [data-theme="dark"] .card { box-shadow: var(--shadow-dark); }
+
+        /* --- Navbar --- */
+        .navbar { border-bottom: 1px solid var(--border); padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .navbar-brand { font-weight: 700; color: var(--text) !important; }
+
+        /* --- Media Boxes --- */
+        .video-box, .img-box {
+            width: 100%;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: rgba(0,0,0,0.05);
+        }
+        .video-box video, .img-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* --- Equal Height Cards --- */
+        .equal-row > [class*="col-"] { display: flex; }
+        .equal-card { display: flex; flex-direction: column; justify-content: flex-start; flex: 1; }
+
+        /* --- Theme Toggle Button --- */
+        .theme-toggle {
+            background: var(--card);
+            border: 1px solid var(--border);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.25s, border-color 0.25s;
+            padding: 0;
+        }
+        .theme-toggle:hover { background: var(--accent); }
+        .theme-toggle i { font-size: 18px; color: var(--text); transition: color 0.25s; }
+        .theme-toggle:hover i { color: var(--bg) !important; }
+        [data-theme="dark"] .theme-toggle:hover i { color: var(--text) !important; }
+
+        /* --- Buttons & Links --- */
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            transition: background 0.3s, color 0.3s, opacity 0.3s;
+        }
+        .btn-primary:hover {
+            background: #0b5ed7;
+            color: #fff;
+            opacity: 0.9;
+        }
+
+        /* --- Form Controls --- */
+        .form-control {
+            background-color: var(--card) !important;
+            color: var(--text) !important;
+            border: 1px solid var(--border) !important;
+            transition: border-color .3s, box-shadow .3s;
+        }
+        .form-control::placeholder { color: var(--text) !important; opacity: 0.6 !important; }
+        .form-control:focus { border-color: var(--accent) !important; box-shadow: 0 0 0 0.25rem rgba(13,110,253,0.25) !important; }
+
+        /* --- Scroll Reveal Smooth --- */
+        .fade-anim {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-anim.visible { opacity: 1; transform: translateY(0); }
+    </style>
 </head>
 <body>
-  <!-- Background -->
-  <img id="bgImage" class="background-image" src="images/light.png" alt="Background">
-
-  <!-- Theme Toggle Button -->
-  <div class="theme-toggle position-fixed top-0 end-0 p-3 z-3">
-    <button id="themeBtn" class="btn btn-outline-secondary rounded-circle">
-      <i class="bi bi-moon-fill"></i>
-    </button>
-  </div>
-
-  <!-- Main Content -->
-  <div class="d-flex align-items-center justify-content-center min-vh-100 position-relative z-2">
-    <div class="container py-4">
-      <div class="row g-4 justify-content-center align-items-start">
-        
-        <!-- LEFT COLUMN -->
-        <div class="col-lg-4 col-md-6" id="leftColumn">
-          <!-- Profile Card -->
-          <div class="card p-3 text-center shadow-sm mb-4">
-            <img id="profileImage" src="images/profile-light.png" alt="Profile" class="profile-img mx-auto mb-3 shadow-sm">
-            <h4 class="fw-bold mb-1">PRU</h4>
-            <p class="text-muted mb-3">Portfolio</p>
-            <p class="small text-secondary mb-0">
-              Hey there! I’m Pru, a chill dev who enjoys creating, learning, and having fun with code.
-            </p>
-            <h6 class="mt-2">🌏 East Java, Indonesia • UTC+7</h6>
-          </div>
-
-          <!-- About + Pricing -->
-          <div class="card p-3 shadow-sm mb-4">
-            <h5 class="fw-semibold mb-2">About Me</h5>
-            <p class="small text-secondary mb-3">
-              I’m a chill developer who loves learning new things and making random ideas come to life. 
-              I enjoy coding, experimenting, and improving my skills every day.
-            </p>
-
-            <h6 class="fw-semibold mt-3 mb-2">💸 Pricing</h6>
-            <ul class="list-unstyled small text-secondary mb-0">
-              <li>
-                <strong>Small Project:</strong> $5 / 450 Robux <br>
-                <small>Simple scripts, small animations, or quick fixes</small>
-              </li>
-              <hr class="my-2">
-              <li>
-                <strong>Medium Project:</strong> $10 / 900 Robux <br>
-                <small>Systems, UI features, or multi-part scripts</small>
-              </li>
-              <hr class="my-2">
-              <li>
-                <strong>Large Project:</strong> $20+ / 1800 Robux+ <br>
-                <small>Full systems, advanced mechanics, or long-term work</small>
-              </li>
-            </ul>
-            <p class="text-muted small mt-3 mb-0">
-              💬 Prices may vary depending on complexity — feel free to contact me!
-            </p>
-          </div>
-
-          <!-- Buttons -->
-          <div class="d-flex gap-2 mt-2 mb-2 position-relative" style="top: -5px;">
-            <a href="https://discord.com/1181883118756565013" target="_blank" class="btn btn-primary flex-fill d-flex align-items-center justify-content-center gap-2">
-              <i class="bi bi-discord" style="font-size: 1.2em;"></i>
-              <span>Discord</span>
+    <nav class="navbar navbar-expand-lg sticky-top shadow-sm" data-theme>
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">
+                <span class="keep-color">Pru</span> Portfolio
             </a>
-
-            <a href="https://www.roblox.com/users/5223146360/profile" target="_blank" class="btn btn-roblox flex-fill d-flex align-items-center justify-content-center gap-2">
-              <span class="roblox-icon"></span>
-              <span>Roblox</span>
-            </a>
-          </div>
-        </div>
-
-        <!-- RIGHT COLUMN -->
-        <div class="col-lg-6 col-md-8">
-          <div class="card p-3 shadow-sm h-100 d-flex flex-column">
-            <h5 class="fw-bold mb-3">Video</h5>
-            <div id="videoFrame" class="video-frame pe-1">
-              <div class="row g-3">
-                <!-- VIDEO TEMPLATES -->
-                <div class="col-6">
-                  <div class="ratio ratio-16x9 rounded overflow-hidden">
-                    <iframe src="https://www.youtube.com/embed/your-video-id-1" title="Video 1" allowfullscreen></iframe>
-                  </div>
-                  <p class="small text-center mt-1 text-secondary">Game Showcase</p>
-                </div>
-                <div class="col-6">
-                  <div class="ratio ratio-16x9 rounded overflow-hidden">
-                    <iframe src="https://www.youtube.com/embed/your-video-id-2" title="Video 2" allowfullscreen></iframe>
-                  </div>
-                  <p class="small text-center mt-1 text-secondary">Game Showcase</p>
-                </div>
-                <div class="col-6">
-                  <div class="ratio ratio-16x9 rounded overflow-hidden">
-                    <iframe src="https://www.youtube.com/embed/your-video-id-1" title="Video 1" allowfullscreen></iframe>
-                  </div>
-                  <p class="small text-center mt-1 text-secondary">Game Showcase</p>
-                </div>
-                <div class="col-6">
-                  <div class="ratio ratio-16x9 rounded overflow-hidden">
-                    <iframe src="https://www.youtube.com/embed/your-video-id-2" title="Video 2" allowfullscreen></iframe>
-                  </div>
-                  <p class="small text-center mt-1 text-secondary">Game Showcase</p>
-                </div>
-                <div class="col-6">
-                  <div class="ratio ratio-16x9 rounded overflow-hidden">
-                    <iframe src="https://www.youtube.com/embed/your-video-id-1" title="Video 1" allowfullscreen></iframe>
-                  </div>
-                  <p class="small text-center mt-1 text-secondary">Game Showcase</p>
-                </div>
-                <div class="col-6">
-                  <div class="ratio ratio-16x9 rounded overflow-hidden">
-                    <iframe src="https://www.youtube.com/embed/your-video-id-2" title="Video 2" allowfullscreen></iframe>
-                  </div>
-                  <p class="small text-center mt-1 text-secondary">Game Showcase</p>
-                </div>
-                <!-- Tambahkan video lain sesuai kebutuhan -->
-              </div>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav" 
+                aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="nav">
+                <ul class="navbar-nav align-items-center gap-3">
+                    <li class="nav-item"><a class="nav-link" href="#about">About Me</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#whyme">Why Me</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#tos">TOS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item">
+                        <button class="theme-toggle btn p-0 ms-2" id="themeToggle" aria-label="Toggle theme">
+                            <i class="bi bi-moon-stars fs-5" id="themeIcon"></i>
+                        </button>
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </nav>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <main>
+        <!-- Hero Section -->
+        <section class="text-center section fade-anim">
+            <div class="container">
+                <p class="text-uppercase fw-semibold mb-1" style="letter-spacing: 2px; opacity: .75;">
+                    <i class="bi bi-lightning-charge-fill me-1 keep-color"></i> Professional Roblox Developer
+                </p>
+                <h1 class="fw-bold display-5 mb-2">
+                    Hi, I'm <span class="keep-color">pru</span><br>
+                    <span style="opacity:.9;">Roblox Developer</span>
+                </h1>
+                <p class="lead mb-3" style="max-width: 650px; margin: 0 auto; opacity: .85;">
+                    Scripter • UI Designer • 3+ Years Experience  
+                </p>
+                <a href="#contact" class="btn btn-primary btn-lg mt-3 shadow-sm px-4 py-2">
+                    <i class="bi bi-rocket-takeoff me-2"></i>Hire Me
+                </a>
+                <p class="small text-muted mt-3">Available for commissions</p>
+            </div>
+        </section>
 
-  <!-- Custom Script: Theme & Height Matching -->
-  <script src="script.js"></script>
+        <!-- About Section -->
+        <section id="about" class="section fade-anim">
+            <div class="container">
+                <div class="card p-4 p-md-5">
+                    <h2 class="section-title">About Me</h2>
+                    <p class="text-center w-75 mx-auto mb-3 lead">
+                        I am a <strong>Developer</strong> specializing in <strong>LUAU scripting</strong> and <strong>UI design</strong>. I use Roblox Studio (3 years) and Figma (1 year). I accept PayPal only.
+                    </p>
+                    <p class="d-flex flex-column align-items-center mt-2 mb-0">
+                        <span class="d-flex align-items-center gap-2 text-muted">
+                            <i class="bi bi-globe-asia-australia fs-5 keep-color"></i>
+                            <span>Based in East Java, Indonesia</span>
+                            <small style="margin-top: 2px;">(<strong>GMT+7</strong>)</small>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Me Section -->
+        <section id="whyme" class="section fade-anim">
+            <div class="container">
+                <h2 class="section-title">Why Me?</h2>
+                <div class="row g-4 equal-row">
+                    <div class="col-md-4">
+                        <div class="card equal-card text-center p-4">
+                            <i class="bi bi-lightning-charge fs-1 mb-2 keep-color"></i>
+                            <h5 class="fw-bold">Fast Delivery</h5>
+                            <p class="mb-0 text-muted">Quick delivery with a clean and efficient workflow.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card equal-card text-center p-4">
+                            <i class="bi bi-code-slash fs-1 mb-2 keep-color"></i>
+                            <h5 class="fw-bold">Clean Code</h5>
+                            <p class="mb-0 text-muted">Optimized LUAU with organized, readable structure.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card equal-card text-center p-4">
+                            <i class="bi bi-window fs-1 mb-2 keep-color"></i>
+                            <h5 class="fw-bold">Modern UI</h5>
+                            <p class="mb-0 text-muted">Visually appealing and modern user interfaces.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section fade-anim">
+            <div class="container">
+                <h2 class="section-title">Projects</h2>
+
+                <h4 class="fw-bold mb-3 keep-color"><i class="bi bi-terminal me-2"></i>Scripting Examples</h4>
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6"><div class="video-box"><video controls src="video1.mp4" poster="video1_placeholder.jpg" aria-label="Project Video 1"></video></div></div>
+                    <div class="col-md-6"><div class="video-box"><video controls src="video2.mp4" poster="video2_placeholder.jpg" aria-label="Project Video 2"></video></div></div>
+                </div>
+
+                <h4 class="fw-bold mb-3 keep-color"><i class="bi bi-window me-2"></i>UI Designs</h4>
+                <div class="row g-4">
+                    <div class="col-md-6"><div class="img-box"><img src="ui1.jpg" alt="UI Design Example 1"></div></div>
+                    <div class="col-md-6"><div class="img-box"><img src="ui2.jpg" alt="UI Design Example 2"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="section fade-anim">
+            <div class="container">
+                <h2 class="section-title">Pricing</h2>
+                <div class="row g-4 equal-row">
+                    <div class="col-md-6">
+                        <div class="card p-4 equal-card text-center">
+                            <i class="bi bi-code-slash fs-1 mb-2 keep-color"></i>
+                            <h4 class="fw-bold">Scripting</h4>
+                            <hr>
+                            <div class="my-2">
+                                <p class="mb-1 fw-bold">Basic — <span class="keep-color">$20+</span></p>
+                                <p class="small text-muted mb-3">Small scripts / minor tweaks.</p>
+                            </div>
+                            <div class="my-2">
+                                <p class="mb-1 fw-bold">Standard — <span class="keep-color">$50+</span></p>
+                                <p class="small text-muted mb-3">Multiple features & professional polishing.</p>
+                            </div>
+                            <div class="my-2">
+                                <p class="mb-1 fw-bold">Premium — <span class="keep-color">$100+</span></p>
+                                <p class="small text-muted mb-0">Complex systems and post-delivery support.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-4 equal-card text-center">
+                            <i class="bi bi-window fs-1 mb-2 keep-color"></i>
+                            <h4 class="fw-bold">UI Design</h4>
+                            <hr>
+                            <div class="my-2">
+                                <p class="mb-1 fw-bold">Basic — <span class="keep-color">$10+</span></p>
+                                <p class="small text-muted mb-3">Simple HUD / single menu design.</p>
+                            </div>
+                            <div class="my-2">
+                                <p class="mb-1 fw-bold">Standard — <span class="keep-color">$25+</span></p>
+                                <p class="small text-muted mb-3">Custom panels, icons, and advanced layouts.</p>
+                            </div>
+                            <div class="my-2">
+                                <p class="mb-1 fw-bold">Premium — <span class="keep-color">$50+</span></p>
+                                <p class="small text-muted mb-0">Full UI kit design with prototype.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <p class="text-muted small mb-2">Prices are subject to change based on project complexity.</p>
+                    <a href="https://paypal.com" target="_blank" rel="noopener" class="btn btn-primary btn-lg shadow-sm">
+                        <i class="bi bi-paypal me-2"></i>Pay via PayPal
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Terms of Service -->
+        <section id="tos" class="section fade-anim">
+            <div class="container">
+                <div class="card p-4 p-md-5">
+                    <h2 class="section-title">Terms of Service</h2>
+                    <ul class="mb-0" style="font-size: 1.05rem;">
+                        <li class="mb-2">I do <strong>not</strong> accept any type of exploit, cheating, or script that breaks <strong>Roblox TOS</strong>.</li>
+                        <li class="mb-2">I do <strong>not</strong> create or work on inappropriate / NSFW scripts or UI designs of any kind.</li>
+                        <li class="mb-2">Refunds are <strong>not available</strong> after the work has started (due to the digital nature of the service).</li>
+                        <li class="mb-2">Prices may vary depending on project complexity and required revisions.</li>
+                        <li class="mb-2">You are <strong>not allowed</strong> to resell or claim my work as your own without explicit permission.</li>
+                        <li class="mb-0">Payments are accepted via <strong>PayPal only</strong> (USD).</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section fade-anim">
+            <div class="container">
+                <h2 class="section-title">Contact Me</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card p-4 text-center">
+                            <p class="lead mb-3">Need a scripter or UI designer? Contact me directly via <strong>Discord</strong> for the fastest response.</p>
+                            <a href="https://discord.gg/DvwZ5qJ2" target="_blank" rel="noopener" class="btn btn-primary btn-lg w-100 shadow">
+                                <i class="bi bi-discord me-2"></i>Join My Discord
+                            </a>
+                            <p class="mt-3 mb-0 text-muted small">Discord Username: <strong>whycantiuseuppercase</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-4 border-top" style="border-color: var(--border) !important;">
+        <div class="container">
+            <p class="mb-0 small text-muted">&copy; <span id="year"></span> Pru Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ======== Footer Year ========
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // ======== Theme mengikuti browser ========
+        const themeIcon = document.getElementById('themeIcon');
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+        function applyTheme(isDark) {
+            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            themeIcon.className = isDark ? 'bi bi-sun' : 'bi bi-moon-stars';
+        }
+
+        applyTheme(prefersDark.matches);
+        prefersDark.addEventListener('change', e => applyTheme(e.matches));
+
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            applyTheme(current === 'light');
+        });
+
+        // ======== Smooth Reveal Scroll ========
+        const anims = document.querySelectorAll('.fade-anim');
+        function smoothReveal() {
+            const windowHeight = window.innerHeight;
+            anims.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < windowHeight - 50) el.classList.add('visible');
+                else el.classList.remove('visible');
+            });
+        }
+        window.addEventListener('scroll', smoothReveal);
+        window.addEventListener('resize', smoothReveal);
+        document.addEventListener('DOMContentLoaded', smoothReveal);
+
+        // ======== Equal Height Cards ========
+        function equalize() {
+            document.querySelectorAll('.equal-row').forEach(row => {
+                let max = 0;
+                const cards = row.querySelectorAll('.equal-card');
+                cards.forEach(c => c.style.minHeight = '');
+                if (window.innerWidth >= 768) {
+                    cards.forEach(c => { 
+                        const h = c.getBoundingClientRect().height; 
+                        if (h > max) max = h; 
+                    });
+                    cards.forEach(c => c.style.minHeight = max + 'px');
+                }
+            });
+        }
+        window.addEventListener('load', equalize);
+        window.addEventListener('resize', () => setTimeout(equalize, 100));
+
+        // ======== Smooth Navigation Scroll & Scroll Spy ========
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        document.querySelectorAll('.navbar-nav a').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+                const navCollapse = document.getElementById('nav');
+                if (navCollapse.classList.contains('show')) bootstrap.Collapse.getInstance(navCollapse)?.hide();
+            });
+        });
+
+        function scrollSpy() {
+            let current = '';
+            sections.forEach(sec => { if (scrollY >= sec.offsetTop - 100) current = sec.id; });
+            navLinks.forEach(link => link.classList.remove('active'));
+            navLinks.forEach(link => { if (link.getAttribute('href').includes(current)) link.classList.add('active'); });
+        }
+        window.addEventListener('scroll', scrollSpy);
+        document.addEventListener('DOMContentLoaded', scrollSpy);
+    </script>
 </body>
 </html>
-
-
